@@ -5,7 +5,7 @@ import {
   allProducts,
   createProduct,
   deleteProducts,
-  retrieveProducts,
+  idProducts,
   updateProducts,
 } from "./logic";
 import {
@@ -25,7 +25,7 @@ app.patch(
   updateProducts
 );
 app.get("/products", allProducts);
-app.get("/products/:id", productsMiddlewareIdExist, retrieveProducts);
+app.get("/products/:id", productsMiddlewareIdExist, idProducts);
 app.delete("/products/:id", productsMiddlewareIdExist, deleteProducts);
 
 app.listen(3000, () => {

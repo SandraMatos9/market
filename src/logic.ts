@@ -1,16 +1,17 @@
 import { Request, Response } from "express";
 import market from "./database";
 import { IProduct, TProductRequest } from "./interfaces";
-
+ let id = 1
 const createProduct = (request: Request, response: Response): Response => {
   const productData: TProductRequest[] = request.body;
 
-  let count = 0;
+  
 
   const marketProducts = productData.map((product) => {
-    count++;
+   
     const newProduct: IProduct = {
-      id: count,
+      
+      id: id++,
       ...product,
       expirationDate: new Date(),
     };
@@ -23,22 +24,27 @@ const createProduct = (request: Request, response: Response): Response => {
 };
 
 const allProducts = (request: Request, response: Response): Response => {
-  return response.json(market);
+  const total: number = market.reduce((a, b) => a + b.price, 0);
+
+  return response.json({total,market} );
 };
 
-const retrieveProducts = (request: Request, response: Response): Response => {
+const idProducts = (request: Request, response: Response): Response => {
   const index = response.locals.marketProducts.indexProduct;
+  console.log(index)
+    
 
   return response.json(market[index]);
 };
 const deleteProducts = (request: Request, response: Response): Response => {
   const index = response.locals.marketProducts.indexProduct;
+
   market.splice(index, 1);
   return response.status(204).send();
 };
 
 const updateProducts = (request: Request, response: Response): Response => {
-  const index = response.locals.marketProducts.indexProduct;
+  const index = response.locals.marketProducts.id;
   const updateData = request.body;
   market[index] = {
     ...market[index],
@@ -49,7 +55,7 @@ const updateProducts = (request: Request, response: Response): Response => {
 export {
   createProduct,
   allProducts,
-  retrieveProducts,
+  idProducts,
   deleteProducts,
   updateProducts,
 };

@@ -15,7 +15,7 @@ const productsMiddlewareIdExist = (
       error: "product not found",
     });
   }
-  response.locals.marketProductsMiddleware = {
+  response.locals.marketProducts = {
     idProduct: id,
     indexProduct: findIndex,
   };
@@ -37,7 +37,7 @@ const productsMiddlewareNameExist = (
       );
 
       if (filterName.length != 0) {
-        return response.status(404).json({
+        return response.status(409).json({
           error: "Product already registered",
         });
       }
@@ -50,7 +50,7 @@ const productsMiddlewareNameExist = (
       (productName) => productName.name === name
     );
     if (filterName.length != 0) {
-      return response.status(404).json({
+      return response.status(409).json({
         error: "Product already registered",
       });
     }
