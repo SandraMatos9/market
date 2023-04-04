@@ -26,25 +26,24 @@ const createProduct = (request: Request, response: Response): Response => {
 const allProducts = (request: Request, response: Response): Response => {
   const total: number = market.reduce((a, b) => a + b.price, 0);
 
-  return response.json({total,market} );
+  const marketProducts = market
+
+  return response.json({total,marketProducts} );
 };
 
 const idProducts = (request: Request, response: Response): Response => {
   const index = response.locals.marketProducts.indexProduct;
   console.log(index)
-    
-
   return response.json(market[index]);
 };
 const deleteProducts = (request: Request, response: Response): Response => {
   const index = response.locals.marketProducts.indexProduct;
-
   market.splice(index, 1);
   return response.status(204).send();
 };
 
 const updateProducts = (request: Request, response: Response): Response => {
-  const index = response.locals.marketProducts.id;
+  const index = response.locals.marketProducts.indexProduct;
   const updateData = request.body;
   market[index] = {
     ...market[index],

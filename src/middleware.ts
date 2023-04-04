@@ -45,9 +45,8 @@ const productsMiddlewareNameExist = (
   }
   if (metodo == "PATCH") {
     const productData: TProductRequest = request.body;
-    const name = request.params.name;
     const filterName: IProduct[] = market.filter(
-      (productName) => productName.name === name
+      (productName) => productData.name === productName.name
     );
     if (filterName.length != 0) {
       return response.status(409).json({
